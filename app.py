@@ -45,7 +45,7 @@ def add_new_image():
     db.session.add(image)
     db.session.commit()
     response = make_response(jsonify({'success' : 'Image Index added successfully'}), 201)
-    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Origin'] = 'https://mail.google.com'
     return response
 
 @app.route('/images/<int:image_key>')
