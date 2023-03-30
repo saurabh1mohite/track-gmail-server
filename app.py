@@ -3,13 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask import Flask
 from flask_cors import CORS
+import logging
 
 app = Flask(__name__)
+app.logger.setLevel(logging.INFO)
 CORS(app)
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] =\
         'sqlite:///' + os.path.join(basedir, 'imagekey.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -55,13 +56,17 @@ def download_image(image_key):
     """
     # Check if key exists
     key_called = ImageKey.query.filter_by(image_key = image_key).first()
+    app.logger.info("Key searched in database")
     if key_called:
+        app.logger.info(f"Accessed key - {key_called}")
         if key_called.visits < 2:
             key_called.visits += 1
             db.session.commit()
         elif key_called.visits > 1:
             db.session.delete(key_called)
             db.session.commit()
+    else:
+        app.logger.info("No key found")
     # Serve file to the user
     return send_file('images/tree.jpg', as_attachment=True)       
 
