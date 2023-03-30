@@ -56,7 +56,6 @@ def download_image(image_key):
     # Check if key exists
     key_called = ImageKey.query.filter_by(image_key = image_key).first()
     if key_called:
-        print(key_called)
         if key_called.visits < 2:
             key_called.visits += 1
             db.session.commit()
