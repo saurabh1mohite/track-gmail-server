@@ -62,7 +62,7 @@ def download_image(image_key):
         if key_called.visits < 2:
             key_called.visits += 1
             db.session.commit()
-        elif key_called.visits > 1:
+        else:
             db.session.delete(key_called)
             db.session.commit()
     else:
