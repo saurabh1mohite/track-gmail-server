@@ -71,6 +71,8 @@ def download_image(image_key):
     else:
         app.logger.info("No key found")
     # Serve file to the user
+    response = make_response(send_file('images/tree.jpg', as_attachment=True))
+    response.headers['Access-Control-Allow-Origin'] = '*'
     return send_file('images/tree.jpg', as_attachment=True)       
 
 
