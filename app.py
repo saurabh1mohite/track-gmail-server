@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 
-CORS(app)
+CORS(app, origins = ['https://mail.google.com' ])
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
