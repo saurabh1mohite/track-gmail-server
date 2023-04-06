@@ -67,7 +67,7 @@ def download_image(image_key):
             db.session.delete(key_called)
             db.session.commit()
         else:
-            db.commit()    
+            db.session.commit()    
     else:
         app.logger.info("No key found")
     # Serve file to the user
