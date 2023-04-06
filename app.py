@@ -4,15 +4,17 @@ import os
 from flask import Flask
 from flask_cors import CORS
 import logging
+import sys
 
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+
 CORS(app)
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] =\
-        'sqlite:///' + os.path.join(basedir, 'imagekey.db')
+app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///' + os.path.join(basedir, 'imagekey.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
@@ -55,16 +57,17 @@ def download_image(image_key):
     Download image from the specified path and serve it to the user
     """
     # Check if key exists
-    key_called = ImageKey.query.filter_by(image_key = image_key).first()
+    # key_called = ImageKey.query.filter_by(image_key = image_key).first()
+    key_called = ImageKey.query.get(image_key)
     app.logger.info("Key searched in database")
-    if key_called:
+    if key_called is not None:
         app.logger.info(f"Accessed key - {key_called}")
-        if key_called.visits < 2:
-            key_called.visits += 1
-            db.session.commit()
-        else:
+        key_called.visits += 1
+        if key_called.visits >= 2:
             db.session.delete(key_called)
             db.session.commit()
+        else:
+            db.session.commit()    
     else:
         app.logger.info("No key found")
     # Serve file to the user
