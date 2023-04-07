@@ -32,6 +32,7 @@ def helloWorld():
 # @cross_origin(origin='https://mail.google.com')
 def add_new_image():
     data = dict(request.json)
+    data['image_key'] = int(data['image_key'])
     if not data or not data['image_key'] or not isinstance(data['image_key'], int):
         return jsonify({'error' : 'Invalid input data'}), 400
     
