@@ -26,7 +26,7 @@ class ImageKey(db.Model):
 
 @app.route('/')
 def helloWorld():
-    return 'Home'
+    return 'Home, hello world!'
 
 @app.route('/images', methods=['POST'])
 # @cross_origin(origin='https://mail.google.com')
