@@ -31,8 +31,8 @@ def helloWorld():
 @app.route('/images', methods=['POST'])
 # @cross_origin(origin='https://mail.google.com')
 def add_new_image():
-    data = request.json
-    if not data or not data.get('image_key') or not isinstance(data.get('image_key'), int):
+    data = dict(request.json)
+    if not data or not data['image_key'] or not isinstance(data['image_key'], int):
         return jsonify({'error' : 'Invalid input data'}), 400
     
     if ImageKey.query.filter_by(image_key = data['image_key']).first():
