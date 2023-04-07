@@ -29,7 +29,7 @@ def helloWorld():
     return 'Home'
 
 @app.route('/images', methods=['POST'])
-@cross_origin(origin='https://mail.google.com')
+# @cross_origin(origin='https://mail.google.com')
 def add_new_image():
     data = request.json
     if not data or not data.get('image_key') or not isinstance(data.get('image_key'), int):
@@ -45,7 +45,7 @@ def add_new_image():
 
 
 @app.route('/images/<int:image_key>')
-@cross_origin(origin='https://mail.google.com')
+# @cross_origin(origin='https://mail.google.com')
 def download_image(image_key):
     """
     Download image from the specified path and serve it to the user
