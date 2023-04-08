@@ -87,7 +87,7 @@ def download_image(image_key):
     if key_called is not None:
         app.logger.info(f"Accessed key - {key_called}")
         key_called.visits += 1
-        if key_called.visits >= 2:
+        if key_called.visits >= 1:
             db.session.delete(key_called)
             db.session.commit()
         else:
