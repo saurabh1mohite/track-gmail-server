@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_cors import CORS
 import logging
-from logging.handlers import RotatingFileHandler
 import logging
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -13,18 +12,14 @@ logging.basicConfig(
     level = logging.INFO,
     format = '[%(asctime)s] %(levelname)s in %(module)s: %(message)s'
 )
-# handler.setLevel(logging.INFO)
-# formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
-# handler.setFormatter(formatter)
 
 
 
 app = Flask(__name__)
-# app.logger.addHandler(handler)
 
 
 
-CORS(app)
+CORS(app, origins='https://mail.google.com/*')
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///' + os.path.join(basedir, 'imagekey.db')
@@ -95,7 +90,7 @@ def download_image(image_key):
     else:
         app.logger.info("No key found")
     # Serve file to the user
-    return send_file('images/tree.jpg', as_attachment=True)
+    return send_file('images/tracker.jpg', as_attachment=True)
 
 
 
