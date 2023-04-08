@@ -31,15 +31,15 @@ def helloWorld():
 @app.route('/images', methods=['POST'])
 # @cross_origin(origin='https://mail.google.com')
 def add_new_image():
-    data = dict(request.json)
-    data['image_key'] = int(data['image_key'])
-    if not data or not data['image_key'] or not isinstance(data['image_key'], int):
+    data = request.json
+    if not data or not data.get('image_key'):
         return jsonify({'error' : 'Invalid input data'}), 400
     
-    if ImageKey.query.filter_by(image_key = data['image_key']).first():
+    image_key = int(data.get('image_key'))
+    if ImageKey.query.filter_by(image_key = image_key).first():
         return jsonify({'error': 'Image index already exists'}), 409
 
-    image = ImageKey(image_key = data['image_key'], visits = 0)
+    image = ImageKey(image_key = image_key, visits = 0)
     db.session.add(image)
     db.session.commit()
     return jsonify({'success' : 'Image Index added successfully'}), 201
