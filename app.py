@@ -23,8 +23,6 @@ app = Flask(__name__)
 # app.logger.addHandler(handler)
 
 
-app.logger.info('Flask app started')
-print('Flask app started')
 
 CORS(app)
 
