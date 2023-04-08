@@ -62,7 +62,7 @@ def add_new_image():
     image = ImageKey(image_key = image_key, visits = 0)
     db.session.add(image)
     db.session.commit()
-    app.logger.info('Image Index added successfully')
+    app.logger.info(f'Image Index added successfully - {image_key}')
     return jsonify({'success' : 'Image Index added successfully'}), 201
 
 
